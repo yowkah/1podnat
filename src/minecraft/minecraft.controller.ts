@@ -6,16 +6,19 @@ import {
   Patch,
   Param,
   Delete,
+  ValidationPipe,
 } from '@nestjs/common';
 import { MinecraftService } from './minecraft.service';
 import { CreateMinecraftDto } from './dto/create-minecraft.dto';
 import { UpdateMinecraftDto } from './dto/update-minecraft.dto';
+import { UsePipes } from '@nestjs/common';
 
 @Controller('minecraft')
 export class MinecraftController {
   constructor(private readonly minecraftService: MinecraftService) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
   create(@Body() createMinecraftDto: CreateMinecraftDto) {
     return this.minecraftService.create(createMinecraftDto);
   }
@@ -27,7 +30,7 @@ export class MinecraftController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.minecraftService.findOne(+id);
+    return this.minecraftService.findOne(id);
   }
 
   @Patch(':id')

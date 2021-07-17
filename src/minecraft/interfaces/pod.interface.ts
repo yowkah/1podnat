@@ -1,4 +1,4 @@
-export interface Pod {
+export interface PodInterface {
   AutoRemove: true;
   Command: [string];
   Created: string;
