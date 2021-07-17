@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  1podnat:
+    image: 1podnat
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    volumes:
+      - .:/opt/1podnat
+      - /run/podman/podman.sock:/run/podman/podman.sock
+    ports:
+      - 3000:3000
