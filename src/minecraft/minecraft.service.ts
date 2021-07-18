@@ -1,11 +1,5 @@
-import {
-  HttpException,
-  HttpService,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
-import { create } from 'domain';
+import { HttpException, HttpService, Injectable } from '@nestjs/common';
+import { VolumeService } from '../volume/volume.service';
 import { CreateMinecraftDto } from './dto/create-minecraft.dto';
 import { GetMinecraftDetailsDto } from './dto/get-minecraft-details.dto';
 import { GetMinecraftDto } from './dto/get-minecraft.dto';
@@ -19,7 +13,10 @@ const options = {
 
 @Injectable()
 export class MinecraftService {
-  constructor(private httpService: HttpService) {}
+  constructor(
+    private httpService: HttpService,
+    private volumeService: VolumeService,
+  ) {}
 
   async pullImage(): Promise<void> {
     const request = this.httpService.request({
@@ -35,12 +32,43 @@ export class MinecraftService {
       ...options,
     });
 
-    const response = await request.toPromise();
+    await request.toPromise();
   }
 
   async create(createMinecraftDto: CreateMinecraftDto) {
     try {
       await this.pullImage();
+      await this.volumeService.createIfNoExist(
+        `1pn_${createMinecraftDto.volumeName}`,
+      );
+      const request = this.httpService.post(
+        'http://d/v3.0.0/libpod/containers/create',
+        {
+          image: 'docker.io/itzg/minecraft-server:latest',
+          name: `1pn_${createMinecraftDto.name}`,
+          volumes: [
+            {
+              Dest: '/data',
+              Name: `1pn_${createMinecraftDto.volumeName}`,
+            },
+          ],
+          env: {
+            EULA: 'TRUE',
+          },
+          portMappings: [
+            {
+              container_port: 25565,
+              host_port: 26656,
+              protocol: 'tcp',
+              range: 10,
+            },
+          ],
+        },
+        { ...options },
+      );
+      const response = await request.toPromise();
+      console.log(response);
+      return response.data;
     } catch (err) {
       console.log(err);
       throw new HttpException(
