@@ -1,6 +1,7 @@
-import { HttpModule, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { VolumeService } from './volume.service';
 import { VolumeController } from './volume.controller';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   controllers: [VolumeController],

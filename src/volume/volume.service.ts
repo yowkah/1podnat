@@ -1,6 +1,5 @@
 import {
   HttpException,
-  HttpService,
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
@@ -9,6 +8,7 @@ import { GetVolumeDetailsDto } from './dto/get-volume-details.dto';
 import { FsHelper } from 'src/common/helpers/fs.helper';
 import { GetVolumeTreeDto } from './dto/get-volume-tree.dto';
 import { join } from 'path';
+import { HttpService } from '@nestjs/axios';
 
 const options = {
   socketPath: '/run/podman/podman.sock',

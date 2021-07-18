@@ -1,4 +1,5 @@
-import { HttpException, HttpService, Injectable } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
+import { HttpException, Injectable } from '@nestjs/common';
 import { VolumeService } from '../volume/volume.service';
 import { CreateMinecraftDto } from './dto/create-minecraft.dto';
 import { GetMinecraftDetailsDto } from './dto/get-minecraft-details.dto';
