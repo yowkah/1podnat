@@ -58,7 +58,7 @@ export class MinecraftService {
           portMappings: [
             {
               container_port: 25565,
-              host_port: 26656,
+              host_port: 27757,
               protocol: 'tcp',
               range: 10,
             },

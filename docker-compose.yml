@@ -11,5 +11,6 @@ services:
     volumes:
       - .:/opt/1podnat
       - /run/podman/podman.sock:/run/podman/podman.sock
+      - /var/lib/containers/storage/volumes:/var/lib/containers/storage/volumes
     ports:
       - 3000:3000

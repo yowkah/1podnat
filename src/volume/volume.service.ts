@@ -6,6 +6,9 @@ import {
 } from '@nestjs/common';
 import { VolumeDetailsInterface } from './interfaces/volume-details.interface';
 import { GetVolumeDetailsDto } from './dto/get-volume-details.dto';
+import { FsHelper } from 'src/common/helpers/fs.helper';
+import { GetVolumeTreeDto } from './dto/get-volume-tree.dto';
+import { join } from 'path';
 
 const options = {
   socketPath: '/run/podman/podman.sock',
@@ -35,7 +38,6 @@ export class VolumeService {
       { Name: volumeName },
       { ...options },
     );
-
     const response = await request.toPromise();
     const volume: VolumeDetailsInterface = response.data;
     return {
@@ -57,5 +59,17 @@ export class VolumeService {
         throw new HttpException(err.response.statusText, err.response.status);
       }
     }
+  }
+
+  async copy(volumeName: string, newVolumeName): Promise<GetVolumeDetailsDto> {
+    const volume = await this.findByName(volumeName);
+    const newVolume = await this.createIfNoExist(newVolumeName);
+    await FsHelper.copyRecursive(volume.mountPoint, newVolume.mountPoint);
+    return this.findByName(newVolumeName);
+  }
+
+  async printTree(volumeName: string): Promise<GetVolumeTreeDto> {
+    const volume = await this.findByName(volumeName);
+    return FsHelper.createFileTree(join(volume.mountPoint, 'world'));
   }
 }
