@@ -7,20 +7,20 @@ export interface PodDetailsInterface {
       property1: string;
       property2: string;
     };
-    AttachStderr: true;
-    AttachStdin: true;
-    AttachStdout: true;
+    AttachStderr: boolean;
+    AttachStdin: boolean;
+    AttachStdout: boolean;
     Cmd: [string];
     CreateCommand: [string];
     Domainname: string;
     Entrypoint: string;
     Env: [string];
     Healthcheck: {
-      Interval: 0;
-      Retries: 0;
-      StartPeriod: 0;
+      Interval: number;
+      Retries: number;
+      StartPeriod: number;
       Test: [string];
-      Timeout: 0;
+      Timeout: number;
     };
     Hostname: string;
     Image: string;
@@ -29,23 +29,23 @@ export interface PodDetailsInterface {
       property2: string;
     };
     OnBuild: string;
-    OpenStdin: true;
+    OpenStdin: boolean;
     Secrets: [
       {
-        GID: 0;
+        GID: number;
         ID: string;
-        Mode: 0;
+        Mode: number;
         Name: string;
-        UID: 0;
+        UID: number;
       },
     ];
-    StdinOnce: true;
-    StopSignal: 0;
-    StopTimeout: 0;
-    SystemdMode: true;
-    Timeout: 0;
+    StdinOnce: boolean;
+    StopSignal: number;
+    StopTimeout: number;
+    SystemdMode: boolean;
+    Timeout: number;
     Timezone: string;
-    Tty: true;
+    Tty: boolean;
     Umask: string;
     User: string;
     Volumes: {
@@ -69,37 +69,37 @@ export interface PodDetailsInterface {
     Name: string;
   };
   HostConfig: {
-    AutoRemove: true;
+    AutoRemove: boolean;
     Binds: [string];
     BlkioDeviceReadBps: [
       {
         Path: string;
-        Rate: 0;
+        Rate: number;
       },
     ];
     BlkioDeviceReadIOps: [
       {
         Path: string;
-        Rate: 0;
+        Rate: number;
       },
     ];
     BlkioDeviceWriteBps: [
       {
         Path: string;
-        Rate: 0;
+        Rate: number;
       },
     ];
     BlkioDeviceWriteIOps: [
       {
         Path: string;
-        Rate: 0;
+        Rate: number;
       },
     ];
-    BlkioWeight: 0;
+    BlkioWeight: number;
     BlkioWeightDevice: [
       {
         Path: string;
-        Weight: 0;
+        Weight: number;
       },
     ];
     CapAdd: [string];
@@ -113,15 +113,15 @@ export interface PodDetailsInterface {
     CgroupMode: string;
     CgroupParent: string;
     Cgroups: string;
-    ConsoleSize: [0];
+    ConsoleSize: [number];
     ContainerIDFile: string;
-    CpuCount: 0;
-    CpuPercent: 0;
-    CpuPeriod: 0;
-    CpuQuota: 0;
-    CpuRealtimePeriod: 0;
-    CpuRealtimeRuntime: 0;
-    CpuShares: 0;
+    CpuCount: number;
+    CpuPercent: number;
+    CpuPeriod: number;
+    CpuQuota: number;
+    CpuRealtimePeriod: number;
+    CpuRealtimeRuntime: number;
+    CpuShares: number;
     CpusetCpus: string;
     CpusetMems: string;
     Devices: [
@@ -131,18 +131,18 @@ export interface PodDetailsInterface {
         PathOnHost: string;
       },
     ];
-    DiskQuota: 0;
+    DiskQuota: number;
     Dns: [string];
     DnsOptions: [string];
     DnsSearch: [string];
     ExtraHosts: [string];
     GroupAdd: [string];
-    IOMaximumBandwidth: 0;
-    IOMaximumIOps: 0;
-    Init: true;
+    IOMaximumBandwidth: number;
+    IOMaximumIOps: number;
+    Init: boolean;
     IpcMode: string;
     Isolation: string;
-    KernelMemory: 0;
+    KernelMemory: number;
     Links: [string];
     LogConfig: {
       Config: {
@@ -154,16 +154,16 @@ export interface PodDetailsInterface {
       Tag: string;
       Type: string;
     };
-    Memory: 0;
-    MemoryReservation: 0;
-    MemorySwap: 0;
-    MemorySwappiness: 0;
-    NanoCpus: 0;
+    Memory: number;
+    MemoryReservation: number;
+    MemorySwap: number;
+    MemorySwappiness: number;
+    NanoCpus: number;
     NetworkMode: string;
-    OomKillDisable: true;
-    OomScoreAdj: 0;
+    OomKillDisable: boolean;
+    OomScoreAdj: number;
     PidMode: string;
-    PidsLimit: 0;
+    PidsLimit: number;
     PortBindings: {
       property1: [
         {
@@ -178,16 +178,16 @@ export interface PodDetailsInterface {
         },
       ];
     };
-    Privileged: true;
-    PublishAllPorts: true;
-    ReadonlyRootfs: true;
+    Privileged: boolean;
+    PublishAllPorts: boolean;
+    ReadonlyRootfs: boolean;
     RestartPolicy: {
-      MaximumRetryCount: 0;
+      MaximumRetryCount: number;
       Name: string;
     };
     Runtime: string;
     SecurityOpt: [string];
-    ShmSize: 0;
+    ShmSize: number;
     Tmpfs: {
       property1: string;
       property2: string;
@@ -195,9 +195,9 @@ export interface PodDetailsInterface {
     UTSMode: string;
     Ulimits: [
       {
-        Hard: 0;
+        Hard: number;
         Name: string;
-        Soft: 0;
+        Soft: number;
       },
     ];
     UsernsMode: string;
@@ -209,7 +209,7 @@ export interface PodDetailsInterface {
   Id: string;
   Image: string;
   ImageName: string;
-  IsInfra: true;
+  IsInfra: boolean;
   MountLabel: string;
   Mounts: [
     {
@@ -219,7 +219,7 @@ export interface PodDetailsInterface {
       Name: string;
       Options: [string];
       Propagation: string;
-      RW: true;
+      RW: boolean;
       Source: string;
       Type: string;
     },
@@ -232,13 +232,13 @@ export interface PodDetailsInterface {
     EndpointID: string;
     Gateway: string;
     GlobalIPv6Address: string;
-    GlobalIPv6PrefixLen: 0;
-    HairpinMode: true;
+    GlobalIPv6PrefixLen: number;
+    HairpinMode: boolean;
     IPAddress: string;
-    IPPrefixLen: 0;
+    IPPrefixLen: number;
     IPv6Gateway: string;
     LinkLocalIPv6Address: string;
-    LinkLocalIPv6PrefixLen: 0;
+    LinkLocalIPv6PrefixLen: number;
     MacAddress: string;
     Networks: {
       property1: {
@@ -251,13 +251,13 @@ export interface PodDetailsInterface {
         EndpointID: string;
         Gateway: string;
         GlobalIPv6Address: string;
-        GlobalIPv6PrefixLen: 0;
+        GlobalIPv6PrefixLen: number;
         IPAMConfig: {
           property1: string;
           property2: string;
         };
         IPAddress: string;
-        IPPrefixLen: 0;
+        IPPrefixLen: number;
         IPv6Gateway: string;
         Links: [string];
         MacAddress: string;
@@ -275,13 +275,13 @@ export interface PodDetailsInterface {
         EndpointID: string;
         Gateway: string;
         GlobalIPv6Address: string;
-        GlobalIPv6PrefixLen: 0;
+        GlobalIPv6PrefixLen: number;
         IPAMConfig: {
           property1: string;
           property2: string;
         };
         IPAddress: string;
-        IPPrefixLen: 0;
+        IPPrefixLen: number;
         IPv6Gateway: string;
         Links: [string];
         MacAddress: string;
@@ -316,34 +316,34 @@ export interface PodDetailsInterface {
   Pod: string;
   ProcessLabel: string;
   ResolvConfPath: string;
-  RestartCount: 0;
+  RestartCount: number;
   Rootfs: string;
-  SizeRootFs: 0;
-  SizeRw: 0;
+  SizeRootFs: number;
+  SizeRw: number;
   State: {
-    ConmonPid: 0;
-    Dead: true;
+    ConmonPid: number;
+    Dead: boolean;
     Error: string;
-    ExitCode: 0;
+    ExitCode: number;
     FinishedAt: string;
     Healthcheck: {
-      FailingStreak: 0;
+      FailingStreak: number;
       Log: [
         {
           End: string;
-          ExitCode: 0;
+          ExitCode: number;
           Output: string;
           Start: string;
         },
       ];
       Status: string;
     };
-    OOMKilled: true;
+    OOMKilled: boolean;
     OciVersion: string;
-    Paused: true;
-    Pid: 0;
-    Restarting: true;
-    Running: true;
+    Paused: boolean;
+    Pid: number;
+    Restarting: boolean;
+    Running: boolean;
     StartedAt: string;
     Status: string;
   };
