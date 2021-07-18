@@ -1,15 +1,15 @@
 export interface PodInterface {
-  AutoRemove: true;
+  AutoRemove: boolean;
   Command: [string];
   Created: string;
   CreatedAt: string;
-  ExitCode: 0;
-  Exited: true;
-  ExitedAt: 0;
+  ExitCode: number;
+  Exited: boolean;
+  ExitedAt: number;
   Id: string;
   Image: string;
   ImageID: string;
-  IsInfra: true;
+  IsInfra: boolean;
   Labels: {
     property1: string;
     property2: string;
@@ -26,23 +26,23 @@ export interface PodInterface {
     Uts: string;
   };
   Networks: [string];
-  Pid: 0;
+  Pid: number;
   Pod: string;
   PodName: string;
   Ports: [
     {
-      container_port: 0;
+      container_port: number;
       host_ip: string;
-      host_port: 0;
+      host_port: number;
       protocol: string;
-      range: 0;
+      range: number;
     },
   ];
   Size: {
-    rootFsSize: 0;
-    rwSize: 0;
+    rootFsSize: number;
+    rwSize: number;
   };
-  StartedAt: 0;
+  StartedAt: number;
   State: string;
   Status: string;
 }
