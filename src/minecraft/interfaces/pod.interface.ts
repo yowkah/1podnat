@@ -31,9 +31,9 @@ export interface PodInterface {
   PodName: string;
   Ports: [
     {
-      container_port: number;
-      host_ip: string;
-      host_port: number;
+      containerPort: number;
+      hostIp: string;
+      hostPort: number;
       protocol: string;
       range: number;
     },

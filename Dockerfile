@@ -9,4 +9,10 @@ RUN npm install
 
 COPY . .
 
-CMD ["npm", "run", "start:dev"]
+RUN npm install -g @nestjs/cli
+
+RUN nest update
+
+RUN npm run build
+
+CMD ["nest", "start", " -w"]

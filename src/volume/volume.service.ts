@@ -9,10 +9,7 @@ import { FsHelper } from 'src/common/helpers/fs.helper';
 import { GetVolumeTreeDto } from './dto/get-volume-tree.dto';
 import { join } from 'path';
 import { HttpService } from '@nestjs/axios';
-
-const options = {
-  socketPath: '/run/podman/podman.sock',
-};
+import { SOCKET_BASE_URI, SOCKET_PATH } from 'src/common/constants/settings';
 
 @Injectable()
 export class VolumeService {
@@ -20,8 +17,8 @@ export class VolumeService {
 
   async findByName(volumeName: string): Promise<GetVolumeDetailsDto> {
     const request = this.httpService.get(
-      `http://d/v3.0.0/libpod/volumes/${volumeName}/json`,
-      { ...options },
+      `${SOCKET_BASE_URI}/libpod/volumes/${volumeName}/json`,
+      { socketPath: SOCKET_PATH },
     );
     const response = await request.toPromise();
     const volume: VolumeDetailsInterface = response.data;
@@ -34,9 +31,9 @@ export class VolumeService {
 
   async create(volumeName: string): Promise<GetVolumeDetailsDto> {
     const request = this.httpService.post(
-      'http://d/v3.0.0/libpod/volumes/create',
+      `${SOCKET_BASE_URI}/libpod/volumes/create`,
       { Name: volumeName },
-      { ...options },
+      { socketPath: SOCKET_PATH },
     );
     const response = await request.toPromise();
     const volume: VolumeDetailsInterface = response.data;

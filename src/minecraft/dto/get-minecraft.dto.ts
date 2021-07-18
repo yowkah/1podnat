@@ -4,4 +4,10 @@ export class GetMinecraftDto {
   imageId: string;
   state: string;
   created: Date;
+  ports: Port;
+}
+
+interface Port {
+  minecraft: number;
+  rcon: number;
 }

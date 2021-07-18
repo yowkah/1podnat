@@ -6,6 +6,10 @@ export class FsHelper {
    * check it out levi, its `cp -R` :o
    * @param src path to source file/directory
    * @param dest path to destination file/directory
+   * @example
+   * copyRecursive('/source/path', /destination/path');
+   * //return void
+   * @returns void
    */
   static async copyRecursive(src: string, dest: string): Promise<void> {
     const exists = await stat(src);

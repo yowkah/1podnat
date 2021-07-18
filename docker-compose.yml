@@ -14,3 +14,4 @@ services:
       - /var/lib/containers/storage/volumes:/var/lib/containers/storage/volumes
     ports:
       - 3000:3000
+    command: nest start --watch

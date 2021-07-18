@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   ValidationPipe,
+  Query,
+  HttpCode,
 } from '@nestjs/common';
 import { MinecraftService } from './minecraft.service';
 import { CreateMinecraftDto } from './dto/create-minecraft.dto';
@@ -23,26 +25,38 @@ export class MinecraftController {
     return this.minecraftService.create(createMinecraftDto);
   }
 
+  @Post(':name/stop')
+  @HttpCode(204)
+  stop(@Param('name') name: string, @Query('delay') delay: number = 0) {
+    return this.minecraftService.stop(name, delay);
+  }
+
+  @Post(':name/start')
+  @HttpCode(204)
+  start(@Param('name') name: string) {
+    return this.minecraftService.start(name);
+  }
+
   @Get()
   findAll() {
     return this.minecraftService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.minecraftService.findOne(id);
+  @Get(':name')
+  findOne(@Param('name') name: string) {
+    return this.minecraftService.findOne(name);
   }
 
-  @Patch(':id')
+  @Patch(':name')
   update(
-    @Param('id') id: string,
+    @Param('name') name: string,
     @Body() updateMinecraftDto: UpdateMinecraftDto,
   ) {
-    return this.minecraftService.update(+id, updateMinecraftDto);
+    return this.minecraftService.update(name, updateMinecraftDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.minecraftService.remove(+id);
+  @Delete(':name')
+  remove(@Param('name') name: string) {
+    return this.minecraftService.remove(name);
   }
 }
