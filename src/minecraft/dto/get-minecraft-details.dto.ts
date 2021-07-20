@@ -4,5 +4,10 @@ export class GetMinecraftDetailsDto {
   created: Date;
   startedAt: Date;
   volumeName: string;
-  ports: Array<number>;
+  ports: Port;
+}
+
+interface Port {
+  minecraft: number;
+  rcon: number;
 }

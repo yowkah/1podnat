@@ -45,8 +45,9 @@ export class MinecraftService {
       if (freePorts.length < 2)
         throw {
           response: {
-            status: 500,
-            message: 'no more ports available, delete an instance',
+            status: 507,
+            message:
+              'no more ports available, delete an instance to make space',
           },
         };
       const request = this.httpService.post(
@@ -82,6 +83,8 @@ export class MinecraftService {
       );
       const response = await request.toPromise();
       console.log(response);
+
+      const instance = await this.findOne(`1pn_${createMinecraftDto.name}`);
       return response.data;
     } catch (err) {
       console.log(err);
@@ -136,9 +139,10 @@ export class MinecraftService {
       console.log(pod.NetworkSettings.Ports);
       return {
         created: new Date(pod.Created),
-        ports: Object.values(pod.NetworkSettings.Ports).map((val) =>
-          Number(val[0].HostPort),
-        ),
+        ports: {
+          minecraft: pod.NetworkSettings.Ports['25565/tcp'][0].HostPort,
+          rcon: pod.NetworkSettings.Ports['25575/tcp'][0].HostPort,
+        },
         name: pod.Name,
         startedAt: new Date(pod.State.StartedAt),
         state: pod.State.Status,

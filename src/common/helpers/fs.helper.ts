@@ -27,7 +27,7 @@ export class FsHelper {
     }
   }
 
-  static async createFileTree(src: string, tree: Object = {}): Promise<any> {
+  static async createFileTree(src: string, tree: object = {}): Promise<any> {
     const fileStat = await stat(src);
     const isDir = fileStat.isDirectory();
     if (fileStat && isDir) {
