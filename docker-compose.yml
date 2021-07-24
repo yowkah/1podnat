@@ -8,6 +8,7 @@ services:
       dockerfile: ./Dockerfile
     environment:
       NODE_ENV: production
+      PN_JWT_SECRET: IWouldWishYouGoodLuckButLuckWontCarryYouThroughTheNether
     volumes:
       - .:/opt/1podnat
       - /run/podman/podman.sock:/run/podman/podman.sock

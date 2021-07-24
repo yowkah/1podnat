@@ -1,11 +1,15 @@
 import { Module } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { MinecraftModule } from './minecraft/minecraft.module';
 import { VolumeModule } from './volume/volume.module';
+import { UsersService } from './users/users.service';
+import { UsersModule } from './users/users.module';
+import { AppController } from './app.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [MinecraftModule, VolumeModule],
-  providers: [AppService],
+  imports: [MinecraftModule, VolumeModule, UsersModule, AuthModule],
+  providers: [AppService, UsersService],
+  controllers: [AppController],
 })
 export class AppModule {}
