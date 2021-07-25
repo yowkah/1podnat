@@ -4,12 +4,11 @@ import { MinecraftModule } from './minecraft/minecraft.module';
 import { VolumeModule } from './volume/volume.module';
 import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
-import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [MinecraftModule, VolumeModule, UsersModule, AuthModule],
   providers: [AppService, UsersService],
-  controllers: [AppController],
+  controllers: [],
 })
 export class AppModule {}

@@ -6,9 +6,9 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    environment:
-      NODE_ENV: production
-      PN_JWT_SECRET: IWouldWishYouGoodLuckButLuckWontCarryYouThroughTheNether
+    env_file:
+      - ./development.env
+
     volumes:
       - .:/opt/1podnat
       - /run/podman/podman.sock:/run/podman/podman.sock
