@@ -1,16 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import { UsersService } from 'src/users/users.service';
+import {
+  ClassSerializerInterceptor,
+  Injectable,
+  UseInterceptors,
+} from '@nestjs/common';
+import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
+import { CreateUserDto } from 'src/user/dto/createUser.dto';
+import { classToPlain } from 'class-transformer';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
+    private userService: UserService,
     private jwtService: JwtService,
   ) {}
 
-  async validate(payload) {
-    return payload;
+  async validate(userDto: CreateUserDto) {
+    const user = await this.userService.findOne(userDto.email);
+    if (user != null) return classToPlain(user);
+
+    const newUser = await this.userService.create(userDto);
+    return classToPlain(newUser);
   }
 
   async login(user: any) {

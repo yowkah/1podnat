@@ -6,7 +6,8 @@ import {
   GOOGLE_CLIENTID,
   GOOGLE_SECRET,
 } from 'src/common/constants/settings';
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth.service';
+import { CreateUserDto } from 'src/user/dto/createUser.dto';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(OAuth2Strategy, 'google') {
@@ -20,7 +21,10 @@ export class GoogleStrategy extends PassportStrategy(OAuth2Strategy, 'google') {
   }
 
   async validate(a, b, profile): Promise<any> {
-    console.log(profile._json);
-    return this.authService.validate(profile._json);
+    const user: CreateUserDto = {
+      email: profile._json.email,
+      picture: profile._json.picture,
+    };
+    return this.authService.validate(user);
   }
 }

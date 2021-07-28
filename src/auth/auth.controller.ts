@@ -1,7 +1,7 @@
 import { Controller, Get, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { DiscordAuthGuard } from './discord-auth.guard';
-import { GoogleAuthGuard } from './google-auth.guard';
+import { DiscordAuthGuard } from './discord/discord-auth.guard';
+import { GoogleAuthGuard } from './google/google-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -10,7 +10,7 @@ export class AuthController {
   @UseGuards(GoogleAuthGuard)
   @Get('google')
   async loginGoogle() {
-    return this.authService.login({});
+    return {};
   }
 
   @UseGuards(GoogleAuthGuard)
@@ -22,7 +22,7 @@ export class AuthController {
   @UseGuards(DiscordAuthGuard)
   @Get('discord')
   async loginDiscord() {
-    return this.authService.login({});
+    return {};
   }
 
   @UseGuards(DiscordAuthGuard)

@@ -2,16 +2,16 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { JWT_SECRET } from 'src/common/constants/settings';
 import { PassportModule } from '@nestjs/passport';
-import { UsersModule } from 'src/users/users.module';
+import { UserModule } from 'src/user/user.module';
 import { AuthService } from './auth.service';
-import { JwtStrategy } from './jwt.strategy';
-import { GoogleStrategy } from './google.strategy';
+import { JwtStrategy } from './jwt/jwt.strategy';
+import { GoogleStrategy } from './google/google.strategy';
 import { AuthController } from './auth.controller';
-import { DiscordStrategy } from './discord.strategy';
+import { DiscordStrategy } from './discord/discord.strategy';
 
 @Module({
   imports: [
-    UsersModule,
+    UserModule,
     PassportModule,
     JwtModule.register({
       secret: JWT_SECRET,

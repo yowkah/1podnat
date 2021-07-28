@@ -6,7 +6,8 @@ import {
   DISCORD_CLIENTID,
   DISCORD_SECRET,
 } from 'src/common/constants/settings';
-import { AuthService } from './auth.service';
+import { CreateUserDto } from 'src/user/dto/createUser.dto';
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class DiscordStrategy extends PassportStrategy(Strategy, 'discord') {
@@ -20,7 +21,14 @@ export class DiscordStrategy extends PassportStrategy(Strategy, 'discord') {
   }
 
   async validate(a, b, profile): Promise<any> {
-    console.log(profile);
-    return this.authService.validate(profile);
+    //according to discord's documentation, animated avatars start with  a_ in their filename
+    // https://discord.com/developers/docs/reference
+    const avatarFileExtension = /^a_/.test(profile.avatar) ? 'gif' : 'png';
+    const user: CreateUserDto = {
+      email: profile.email,
+      picture: `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.${avatarFileExtension}`,
+    };
+    console.log(user);
+    return this.authService.validate(user);
   }
 }

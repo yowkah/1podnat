@@ -2,7 +2,6 @@ import { HttpService } from '@nestjs/axios';
 import { HttpException, Injectable } from '@nestjs/common';
 import { SOCKET_BASE_URI, SOCKET_PATH } from 'src/common/constants/settings';
 import { VolumeService } from '../volume/volume.service';
-import { CreateMinecraftDto } from './dto/create-minecraft.dto';
 import { GetMinecraftDetailsDto } from './dto/get-minecraft-details.dto';
 import { GetMinecraftDto } from './dto/get-minecraft.dto';
 import { UpdateMinecraftDto } from './dto/update-minecraft.dto';
@@ -11,10 +10,7 @@ import { PodInterface } from './interfaces/pod.interface';
 
 @Injectable()
 export class MinecraftService {
-  constructor(
-    private httpService: HttpService,
-    private volumeService: VolumeService,
-  ) {}
+  constructor(private httpService: HttpService) {}
 
   async pullImage(): Promise<void> {
     const request = this.httpService.request({
@@ -31,71 +27,6 @@ export class MinecraftService {
     });
 
     await request.toPromise();
-  }
-
-  async create(createMinecraftDto: CreateMinecraftDto) {
-    try {
-      await this.pullImage();
-      await this.volumeService.createIfNoExist(
-        `1pn_${createMinecraftDto.name}`,
-      );
-      const usedPorts = await this.getUsedPorts();
-      const ports = [...Array(200).keys()].map((n) => n + 25800);
-      const freePorts = ports.filter((port) => !usedPorts.includes(port));
-      if (freePorts.length < 2)
-        throw {
-          response: {
-            status: 507,
-            message:
-              'no more ports available, delete an instance to make space',
-          },
-        };
-      const request = this.httpService.post(
-        `${SOCKET_BASE_URI}/libpod/containers/create`,
-        {
-          image: 'docker.io/itzg/minecraft-server:latest',
-          name: `1pn_${createMinecraftDto.name}`,
-          volumes: [
-            {
-              Dest: '/data',
-              Name: `1pn_${createMinecraftDto.name}`,
-            },
-          ],
-          env: {
-            EULA: 'TRUE',
-          },
-          portMappings: [
-            {
-              container_port: 25565,
-              host_port: freePorts[0],
-              protocol: 'tcp',
-              range: 1,
-            },
-            {
-              container_port: 25575,
-              host_port: freePorts[1],
-              protocol: 'tcp',
-              range: 1,
-            },
-          ],
-        },
-        { socketPath: SOCKET_PATH },
-      );
-      const response = await request.toPromise();
-      console.log(response);
-
-      const instance = await this.findOne(`1pn_${createMinecraftDto.name}`);
-      return response.data;
-    } catch (err) {
-      console.log(err);
-      throw new HttpException(
-        {
-          status: err.response.status,
-          error: err.response.statusText,
-        },
-        err.response.status,
-      );
-    }
   }
 
   async findAll(): Promise<Array<GetMinecraftDto>> {
